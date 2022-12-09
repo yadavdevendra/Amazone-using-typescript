@@ -12,17 +12,7 @@ const Barcodeofedit = ({ data, save, setSave }: BioProps) => {
   const [value, setValue] = useState<any>(1);
   const [textFieldValue, setTextFieldValue] = useState<string>("");
 
-  //   const options = [
-  //     {
-  //       label: "Set the same Product barcode for Shopify and Amazon",
-  //       value: "default",
-  //     },
-  //     {
-  //       label: "Set a Custom Product barcode for Amazon",
-  //       value: "custom",
-  //       renderChildren,
-  //     },
-  //   ];
+
   const handleChoiceListChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
@@ -30,10 +20,13 @@ const Barcodeofedit = ({ data, save, setSave }: BioProps) => {
     const { unset, ...keep } = save;
     setSave({ ...keep, barcode: data?.edited?.barcode || data?.barcode });
   };
-
-  function handleTextFieldChange(value: any) {
-    setTextFieldValue(value);
+  function handleTextFieldChange(e: any) {
+    setTextFieldValue(e.target.value);
+    setSave((prevSave: any) => {
+      return { ...prevSave, unset: { ...prevSave.unset, barcode: 1 } };
+    });
   }
+
   useEffect(() => {
     if (data) setTextFieldValue(data?.edited?.barcode || data?.barcode);
     if (data !== undefined) {

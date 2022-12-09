@@ -1,14 +1,7 @@
-import {
-  Page,
-  Layout,
-  Card,
-  TextContainer,
-  Text,
- 
-} from "@shopify/polaris";
+import { Page, Layout, Card, TextContainer, Text } from "@shopify/polaris";
 import { Input, Radio, RadioChangeEvent, Space } from "antd";
 import React, { useEffect } from "react";
-import { useState} from "react";
+import { useState } from "react";
 interface BioProps {
   data: any;
   save: any;
@@ -26,12 +19,14 @@ function HandlingTime({ data, setSave, save }: BioProps) {
     setSave({
       ...keep,
       inventory_fulfillment_latency:
-        data?.edited?.inventory_fulfillment_latency,
+        data?.edited?.inventory_fulfillment_latency||"N/A",
     });
   };
-
   function handleTextFieldChange(e: any) {
     setTextFieldValue(e.target.value);
+    setSave((prevSave: any) => {
+      return { ...prevSave, unset: { ...prevSave.unset, inventory_fulfillment_latenc: 1 } };
+    });
   }
   useEffect(() => {
     if (data) setTextFieldValue(data?.edited?.inventory_fulfillment_latency);
@@ -42,7 +37,7 @@ function HandlingTime({ data, setSave, save }: BioProps) {
           return {
             ...prevSave,
             inventory_fulfillment_latency:
-              data?.edited?.inventory_fulfillment_latency,
+              data?.edited?.inventory_fulfillment_latency||"N/A",
           };
         });
       } else {
@@ -51,7 +46,7 @@ function HandlingTime({ data, setSave, save }: BioProps) {
           return {
             ...prevSave,
             inventory_fulfillment_latency:
-              data?.edited?.inventory_fulfillment_latency,
+              data?.edited?.inventory_fulfillment_latency||"N/A",
           };
         });
       }

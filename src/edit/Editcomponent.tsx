@@ -40,7 +40,7 @@ function Editcomponent() {
     )
       .then((response) => response.json())
       .then((allData) => {
-        console.log("Editapidata", allData.data.rows);
+        // console.log("Editapidata", allData.data.rows);
         allData.data.rows.map((item:any) => {
           if (item.visibility === "Catalog and Search") { setdata(item) }
         });
@@ -49,7 +49,7 @@ function Editcomponent() {
   }, []);
 
   function handlesave() {
-    // console.log("click on save",save);
+    console.log("click on save",save);
     const paylods =({...payload,...save});
     const header: any ={
       method: "POST",
@@ -66,7 +66,7 @@ function Editcomponent() {
         appTag: "amazon_sales_channel",
       },
     }
-    console.log("result", paylods);
+    // console.log("result", paylods);
     fetch(`https://multi-account.sellernext.com/home/public/connector/product/saveProduct`,
     header
     )

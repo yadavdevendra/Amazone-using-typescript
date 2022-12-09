@@ -1,11 +1,4 @@
-import {
-  Page,
-  Layout,
-  Card,
-  TextContainer,
-  Text,
-
-} from "@shopify/polaris";
+import { Page, Layout, Card, TextContainer, Text } from "@shopify/polaris";
 import { Input, Radio, RadioChangeEvent, Space } from "antd";
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
@@ -15,7 +8,6 @@ interface BioProps {
   setSave: any;
 }
 function Descriptionofedit({ data, setSave, save }: BioProps) {
-
   const [value, setValue] = useState<any>(1);
   const [textFieldValue, setTextFieldValue] = useState<string>("");
 
@@ -31,6 +23,9 @@ function Descriptionofedit({ data, setSave, save }: BioProps) {
   };
   function handleTextFieldChange(e: any) {
     setTextFieldValue(e.target.value);
+    setSave((prevSave: any) => {
+      return { ...prevSave, unset: { ...prevSave.unset, description: 1 } };
+    });
   }
   useEffect(() => {
     if (data) setTextFieldValue(data?.edited?.description || data?.description);

@@ -28,6 +28,9 @@ function PriceOfEdit({ data, setSave, save }: BioProps) {
 
   function handleTextFieldChange(e: any) {
     setTextFieldValue(e.target.value);
+    setSave((prevSave: any) => {
+      return { ...prevSave, unset: { ...prevSave.unset, price: 1 } };
+    });
   }
   useEffect(() => {
     if (data) setTextFieldValue(data?.edited?.price || data?.price);
