@@ -3,14 +3,35 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AppProvider } from '@shopify/polaris';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <AppProvider
+  i18n={{
+    Polaris: {
+      Common: {
+        checkbox: 'case à cocher',
+      },
+      ResourceList: {
+        sortingLabel: 'Trier par',
+        showing: '{itemsCount} {resource} affichés',
+        defaultItemPlural: 'articles',
+        defaultItemSingular: 'article',
+        Item: {
+          viewItem: "Afficher les détails de l'{itemName}",
+        },
+      },
+    },
+  }}
+  >
+  <BrowserRouter>
     <App />
-  </React.StrictMode>
+  </BrowserRouter>
+</AppProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "@shopify/polaris/build/esm/styles.css";
+import Dashboard from "./components/Dashboard";
+import { Routes, Route } from "react-router-dom";
+import Listing from "./components/Listing";
+import Editcomponent from "./edit/Editcomponent";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Dashboard />}>
+          <Route path="/listing" element={<Listing />} />
+          <Route path="/listing/:id" element={<Editcomponent />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
