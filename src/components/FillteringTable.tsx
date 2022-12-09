@@ -1,20 +1,18 @@
-import { useEffect, useState } from "react";
-import { Avatar, Input, Select, Table, Typography } from "antd";
-// import { Link } from "react-router-dom";
-import Popovercom from "./Popovercom";
-import { Switch, Space, Button, Badge } from "antd";
-// import "@shopify/polaris/build/esm/styles.css";
-import { Stack } from "@shopify/polaris";
+import {  useEffect, useState } from "react";
+import { Avatar, Input, Modal, Popover, Select, Table, Typography } from "antd";
+
+import { MoreOutlined } from "@ant-design/icons";
+import { Button, Badge } from "antd";
 import { Link } from "react-router-dom";
-// import { Avatar, Badge, Switch,} from 'antd';
+
+const text = <span>Action</span>;
 
 function FillteringTable() {
-  const [searchedText, setSearchedText] = useState("");
-  const [products, setProducts] = useState([]);
-  const [selectionType, setSelectionType] = useState<"checkbox" | "radio">(
-    "checkbox"
-  );
-  const [show, setShow] = useState(true);
+  const [searchedText, setSearchedText] = useState<string>("");
+  const [products, setProducts] = useState<string[] | any>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>({});
+  // console.log("selectedProduct", selectedProduct);
   const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyX2lkIjoiNjMzMjlkN2YwNDUxYzA3NGFhMGUxNWE4Iiwicm9sZSI6ImN1c3RvbWVyIiwiZXhwIjoxNjk4NzMxOTc2LCJpc3MiOiJodHRwczpcL1wvYXBwcy5jZWRjb21tZXJjZS5jb20iLCJ0b2tlbl9pZCI6IjYzNWY2NDQ4YzQxY2M2MjdhMzBjNmIyMiJ9.o0XvqNpmiAaXQgWC8LgaBrhx6Kjc6rwm0vi-aG-ezZHp3Ph1jcaBqKQq1u9PQSwiCjU6US8xiqMbN_l5JYEwmPOWWQF43Fdt8V2i_dYp2L4mj51rKn9pH7xCloNPAiqCAp7IlfdwXU2NL5cYlb8p4Ve9axRKuPaZ6FpEL49fP8zjlT5gsfR7lr5UD_iKmBH-F-R4ORgQC3vR0CfsW42XXebfTiKf5fh2qBAIrjtSPJyO0jgNxLCTppnT3ruBf3yDL7EcAOFXzUZn_G8NsOSaZp5AvMWIMDkpmBO0VvgkIqSuYOlICki6riprysfwhuwU1XAtpNwI6N571dfUTPhXsw`;
   function test(value: any) {
     let temp = 0;
@@ -26,11 +24,11 @@ function FillteringTable() {
     return temp;
   }
   function varient(value: any) {
-    console.log("Varient",value);
+    // console.log("Varient", value);
     let temp = "";
     value.forEach((item: any) => {
       if (item) {
-        temp += item+" ";
+        temp += item + " ";
       }
     });
     return temp;
@@ -60,11 +58,8 @@ function FillteringTable() {
           return {
             img: item["main_image"],
             key: item._id["$oid"],
-            title: (
-              <Link to={`/listing/${item["container_id"]}`}>
-                {item["title"]}
-              </Link>
-            ),
+            title: item["title"],
+            id: item["container_id"],
             product:
               item["source_product_id"] === item.items[0]["source_product_id"]
                 ? {
@@ -81,14 +76,47 @@ function FillteringTable() {
         setProducts(newData);
       })
       .catch((err) => console.log(err));
-  }, []);
-  console.log("products", products);
+  }, [token]);
+  // console.log("products", products);
   const handleChange = (value: any) => {
     console.log(`selected ${value}`);
   };
+  const content: any = (data: any) => {
+    return (
+      <div
+        style={{ display: "flex", flexDirection: "column", cursor: "pointer" }}
+      >
+        <Typography
+          onClick={() => {
+            setSelectedProduct(data);
+            setIsModalOpen(true);
+          }}
+        >
+          View
+        </Typography>
+        <Typography>Delete</Typography>
+        <Typography>Edit</Typography>
+      </div>
+    );
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "space-between",marginTop:"10px"}}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "10px",
+        }}
+      >
+        {/*Filte Start */}
         <div style={{ display: "flex" }}>
           <Input.Search
             placeholder="Serch Here...."
@@ -113,12 +141,14 @@ function FillteringTable() {
           />
         </div>
         <div>
-          <Button style={{marginRight:"8px"}}>Sync Status</Button>
-          <Button style={{marginRight:"8px"}}>Amazone Account</Button>
+          <Button style={{ marginRight: "8px" }}>Sync Status</Button>
+          <Button style={{ marginRight: "8px" }}>Amazone Account</Button>
           <Button>Bulk Update</Button>
         </div>
       </div>
-      <Table style={{marginTop:"5px"}}
+      {/*Table Start*/}
+      <Table
+        style={{ marginTop: "5px" }}
         columns={[
           {
             align: "left",
@@ -145,8 +175,12 @@ function FillteringTable() {
                 .includes(value.toLowerCase());
             },
             key: "age",
-            render: (_, record) => {
-              return <Typography>{record.title}</Typography>;
+            render: (_: any, record: any) => {
+              return (
+                <Link to={`/listing/${record.id}`}>
+                  <p>{record.title}</p>
+                </Link>
+              );
             },
           },
           {
@@ -154,7 +188,7 @@ function FillteringTable() {
             title: "product",
             dataIndex: "address",
             key: "address",
-            render: (_, record) => {
+            render: (_: any, record: any) => {
               return (
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Typography style={{ color: "black", fontFamily: "bold" }}>
@@ -195,7 +229,7 @@ function FillteringTable() {
             dataIndex: "inventory",
             key: "inventory",
             title: "Inventory",
-            render: (_, record) => {
+            render: (_: any, record: any) => {
               return (
                 <Typography style={{ color: "black", fontFamily: "bold" }}>
                   {record.inventory}
@@ -208,7 +242,7 @@ function FillteringTable() {
             dataIndex: "variant_attributes",
             key: "variant_attributes",
             title: "variant_attributes",
-            render: (_, record) => {
+            render: (_: any, record: any) => {
               return (
                 <Typography style={{ color: "black", fontFamily: "bold" }}>
                   {record.variant_attributes}
@@ -220,19 +254,48 @@ function FillteringTable() {
             title: "Action",
             key: "action",
             render: (_, record) => (
-              <Space size="middle">
-                <a>
-                  <Popovercom />
-                </a>
-              </Space>
+              <>
+                <Popover
+                  placement="bottomLeft"
+                  title={text}
+                  content={() => content(record)}
+                  trigger="click"
+                >
+                  <Button>
+                    <MoreOutlined style={{ fontSize: "20px" }} />
+                  </Button>
+                </Popover>
+              </>
             ),
           },
         ]}
         dataSource={products}
         rowSelection={{
-          type: selectionType,
+          type: "checkbox",
         }}
       />
+      {/*Table End */}
+      {/*Model Start */}
+      <Modal
+        title="Selected Data View"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Avatar src={selectedProduct.img} />
+        <Typography>Title:{selectedProduct.title}</Typography>
+        <Typography>
+          Product:
+          <ul>
+            <li>SKU:{selectedProduct.product?.sku}</li>
+            <li>Price:{selectedProduct.product?.price}</li>
+            <li>Barcode:{selectedProduct.product?.barcode}</li>
+            <li>Quantity:{selectedProduct.product?.quantity}</li>
+          </ul>
+        </Typography>
+        <Typography>Invetory:{selectedProduct.inventory || "N/A"}</Typography>
+        <Typography>variant_attributes:{selectedProduct.variant_attributes || "N/A"}</Typography>
+      </Modal>
     </>
   );
 }

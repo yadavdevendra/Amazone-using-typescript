@@ -1,16 +1,7 @@
-import {
-  Page,
-  Layout,
-  Card,
-  TextContainer,
-  Text,
-  TextField,
-  ChoiceList,
-  Form,
-} from "@shopify/polaris";
+import { Page, Layout, Card, TextContainer, Text } from "@shopify/polaris";
 import { Input, Radio, RadioChangeEvent, Space } from "antd";
 import React, { useEffect } from "react";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 interface BioProps {
   data: any;
   save: any;
@@ -20,13 +11,9 @@ interface BioProps {
 function Titleofedit({ data, setSave, save }: BioProps) {
   // console.log("dataedit", data);
   const [value, setValue] = useState<any>(1);
-//   const [selected, setValue] = useState([]);
+  //   const [selected, setValue] = useState([]);
   const [textFieldValue, setTextFieldValue] = useState("");
-  function handleSubmit(e: any) {
-    setSave((prevSave: any) => {
-      return { ...prevSave, unset: { ...prevSave.unset, title: 1 } };
-    });
-  }
+
   const handleChoiceListChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
@@ -35,12 +22,11 @@ function Titleofedit({ data, setSave, save }: BioProps) {
     setSave({ ...keep, title: data?.edited?.title || data?.title });
   };
 
-
   function handleTextFieldChange(e: any) {
     setTextFieldValue(e.target.value);
     setSave((prevSave: any) => {
-        return { ...prevSave, unset: { ...prevSave.unset, title: 1 } };
-      });
+      return { ...prevSave, unset: { ...prevSave.unset, title: 1 } };
+    });
   }
   useEffect(() => {
     if (data) setTextFieldValue(data?.edited?.title || data?.title);
@@ -81,9 +67,7 @@ function Titleofedit({ data, setSave, save }: BioProps) {
                 <Radio value={1}>
                   Set the same Product title for Shopify and Amazon
                 </Radio>
-                <Radio value={2}>
-                  Set a Custom Product title for Amazon
-                </Radio>
+                <Radio value={2}>Set a Custom Product title for Amazon</Radio>
                 {value === 2 ? (
                   <Input
                     style={{ width: "38vw", marginLeft: 25 }}

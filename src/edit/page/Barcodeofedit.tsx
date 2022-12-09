@@ -1,14 +1,7 @@
-import {
-  Page,
-  Layout,
-  Card,
-  TextContainer,
-  Text,
-  Form,
-} from "@shopify/polaris";
+import { Page, Layout, Card, TextContainer, Text } from "@shopify/polaris";
 import { Input, Radio, RadioChangeEvent, Space } from "antd";
 import React, { useEffect } from "react";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 interface BioProps {
   data: any;
   save: any;
@@ -18,18 +11,18 @@ interface BioProps {
 const Barcodeofedit = ({ data, save, setSave }: BioProps) => {
   const [value, setValue] = useState<any>(1);
   const [textFieldValue, setTextFieldValue] = useState<string>("");
- 
-//   const options = [
-//     {
-//       label: "Set the same Product barcode for Shopify and Amazon",
-//       value: "default",
-//     },
-//     {
-//       label: "Set a Custom Product barcode for Amazon",
-//       value: "custom",
-//       renderChildren,
-//     },
-//   ];
+
+  //   const options = [
+  //     {
+  //       label: "Set the same Product barcode for Shopify and Amazon",
+  //       value: "default",
+  //     },
+  //     {
+  //       label: "Set a Custom Product barcode for Amazon",
+  //       value: "custom",
+  //       renderChildren,
+  //     },
+  //   ];
   const handleChoiceListChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
@@ -81,14 +74,12 @@ const Barcodeofedit = ({ data, save, setSave }: BioProps) => {
         </Layout.Section>
         <Layout.Section>
           <Card sectioned>
-          <Radio.Group onChange={handleChoiceListChange} value={value}>
+            <Radio.Group onChange={handleChoiceListChange} value={value}>
               <Space direction="vertical">
                 <Radio value={1}>
-                Set the same Product barcode for Shopify and Amazon
+                  Set the same Product barcode for Shopify and Amazon
                 </Radio>
-                <Radio value={2}>
-                Set a Custom Product barcode for Amazon
-                </Radio>
+                <Radio value={2}>Set a Custom Product barcode for Amazon</Radio>
                 {value === 2 ? (
                   <Input
                     style={{ width: "38vw", marginLeft: 25 }}

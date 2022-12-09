@@ -4,13 +4,11 @@ import {
   Card,
   TextContainer,
   Text,
-  TextField,
-  ChoiceList,
-  Form,
+ 
 } from "@shopify/polaris";
 import { Input, Radio, RadioChangeEvent, Space } from "antd";
 import React, { useEffect } from "react";
-import { useState, useCallback } from "react";
+import { useState} from "react";
 interface BioProps {
   data: any;
   save: any;

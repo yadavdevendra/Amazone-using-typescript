@@ -13,7 +13,7 @@ function Editcomponent() {
   const [data, setdata] = useState<any>([]);
   const [save, setSave] = useState<any>({});
 
-  console.log("data", data);
+  // console.log("data", data);
 
   // console.log(save, "save");
 
