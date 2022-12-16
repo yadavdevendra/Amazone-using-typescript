@@ -223,21 +223,21 @@ function PolarisFilter() {
             }
         ]
         : [];
-        const filteredUsers = useMemo(
-            () =>
-              products?.filter((product:any) => {
-                return product?.title.toString().toLowerCase().includes(queryValue.toLowerCase())
-              }).map(function (product: any) {
-                return product.title;
-            }),[])
-    console.log("filtering", filteredUsers);
-
-    // let filteredUsers = products?.filter(function (product: any) {
-    //     return product?.title === queryValue;
-    // }).map(function (product: any) {
-    //     return product.title;
-    // })
+    //     const filteredUsers = useMemo(
+    //         () =>
+    //           products?.filter((product:any) => {
+    //             return product?.title.toString().toLowerCase().includes(queryValue.toLowerCase())
+    //           }).map(function (product: any) {
+    //             return product.title;
+    //         }),[])
     // console.log("filtering", filteredUsers);
+
+    // // let filteredUsers = products?.filter(function (product: any) {
+    // //     return product?.title === queryValue;
+    // // }).map(function (product: any) {
+    // //     return product.title;
+    // // })
+    // // console.log("filtering", filteredUsers);
     return (
         <Card>
             <div style={{ padding: "1px", display: "flex" }}>

@@ -1,7 +1,6 @@
 import { Banner, Button, Card,Page,Select } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import FillteringTable from "./FillteringTable";
-import Filterdata from "./Filterdata";
 import PolarisFilter from "./PolarisFilter";
 import Tabcom from "./Tabcom";
 
@@ -50,7 +49,7 @@ function handlepolaris(){
            {(anttable)? <FillteringTable/>
            : <PolarisFilter/>}
            <Button onClick={handlepolaris}>polaris table</Button>
-            {/* <Filterdata/> */}
+    
             </Card>
             
         </Card>
