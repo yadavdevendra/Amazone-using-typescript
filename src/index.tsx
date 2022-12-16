@@ -6,27 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import { AppProvider } from '@shopify/polaris';
 import { BrowserRouter } from 'react-router-dom';
 
+import enTranslations from '@shopify/polaris/locales/en.json';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <AppProvider
-  i18n={{
-    Polaris: {
-      Common: {
-        checkbox: 'case à cocher',
-      },
-      ResourceList: {
-        sortingLabel: 'Trier par',
-        showing: '{itemsCount} {resource} affichés',
-        defaultItemPlural: 'articles',
-        defaultItemSingular: 'article',
-        Item: {
-          viewItem: "Afficher les détails de l'{itemName}",
-        },
-      },
-    },
-  }}
+  i18n={enTranslations}
   >
   <BrowserRouter>
     <App />

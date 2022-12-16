@@ -1,23 +1,25 @@
-import { Banner, Card,Page,Select } from "@shopify/polaris";
+import { Banner, Button, Card,Page,Select } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import FillteringTable from "./FillteringTable";
+import Filterdata from "./Filterdata";
+import PolarisFilter from "./PolarisFilter";
 import Tabcom from "./Tabcom";
-// import FillterExample from './FillterExample'
-// import TabExample from "./TabExample";
-// import Table1 from "./Table1";
 
 const Listing=()=> {
     const [selected, setSelected] = useState('today');
+    const [anttable,setAnttable] = useState<boolean>(true)
     const options = [
         { label: 'new_account', value: 'Select Name' },
      
     ];
     const handleSelectChange = useCallback((value:string) => setSelected(value), []);
-
+function handlepolaris(){
+    setAnttable(false)
+}
     return (
         <Page fullWidth>
         <Card >
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex",justifyContent:"space-between" }}>
                 <Card.Section title="Listing">
                     Add variants if this product comes in multiple versions, like different
                     sizes or colors.if this product comes in multiple versions, like different
@@ -45,7 +47,10 @@ const Listing=()=> {
                 </Banner>
             <Card >
             <Tabcom />
-            <FillteringTable/>
+           {(anttable)? <FillteringTable/>
+           : <PolarisFilter/>}
+           <Button onClick={handlepolaris}>polaris table</Button>
+            {/* <Filterdata/> */}
             </Card>
             
         </Card>

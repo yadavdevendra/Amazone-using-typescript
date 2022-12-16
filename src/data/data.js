@@ -57,3 +57,17 @@ export const payload={
     },
     "target_marketplace": "eyJtYXJrZXRwbGFjZSI6ImFsbCIsInNob3BfaWQiOm51bGx9"
   }
+
+  export const payloaddata = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Ced-Source-Id": 500,
+      "Ced-Source-Name": "shopify",
+      "Ced-Target-Id": 640,
+      "Ced-Target-Name": "amazon",
+      count: 50,
+      productOnly: true,
+      target_marketplace: "eyjtYXJrZXRwbGFjZSI6ImFsbCIsInNob3BfaWQi0m51bGx9",
+    },
+  };

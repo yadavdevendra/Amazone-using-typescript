@@ -1,10 +1,10 @@
 import {  useEffect, useState } from "react";
 import { Avatar, Input, Modal, Popover, Select, Table, Typography } from "antd";
-
 import { MoreOutlined } from "@ant-design/icons";
 import { Button, Badge } from "antd";
 import { Link } from "react-router-dom";
-
+import Skeleten from "./Skeleten";
+import {payloaddata} from '../data/data'
 const text = <span>Action</span>;
 
 function FillteringTable() {
@@ -13,7 +13,8 @@ function FillteringTable() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<any>({});
   // console.log("selectedProduct", selectedProduct);
-  const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyX2lkIjoiNjMzMjlkN2YwNDUxYzA3NGFhMGUxNWE4Iiwicm9sZSI6ImN1c3RvbWVyIiwiZXhwIjoxNjk4NzMxOTc2LCJpc3MiOiJodHRwczpcL1wvYXBwcy5jZWRjb21tZXJjZS5jb20iLCJ0b2tlbl9pZCI6IjYzNWY2NDQ4YzQxY2M2MjdhMzBjNmIyMiJ9.o0XvqNpmiAaXQgWC8LgaBrhx6Kjc6rwm0vi-aG-ezZHp3Ph1jcaBqKQq1u9PQSwiCjU6US8xiqMbN_l5JYEwmPOWWQF43Fdt8V2i_dYp2L4mj51rKn9pH7xCloNPAiqCAp7IlfdwXU2NL5cYlb8p4Ve9axRKuPaZ6FpEL49fP8zjlT5gsfR7lr5UD_iKmBH-F-R4ORgQC3vR0CfsW42XXebfTiKf5fh2qBAIrjtSPJyO0jgNxLCTppnT3ruBf3yDL7EcAOFXzUZn_G8NsOSaZp5AvMWIMDkpmBO0VvgkIqSuYOlICki6riprysfwhuwU1XAtpNwI6N571dfUTPhXsw`;
+  const token =process.env.REACT_APP_API_KEY
+  const api=process.env.REACT_APP_API
   function test(value: any) {
     let temp = 0;
     value.forEach((item: any) => {
@@ -34,22 +35,9 @@ function FillteringTable() {
     return temp;
   }
   useEffect(() => {
-    const payload: any = {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Ced-Source-Id": 500,
-        "Ced-Source-Name": "shopify",
-        "Ced-Target-Id": 640,
-        "Ced-Target-Name": "amazon",
-        count: 50,
-        productOnly: true,
-        target_marketplace: "eyjtYXJrZXRwbGFjZSI6ImFsbCIsInNob3BfaWQi0m51bGx9",
-      },
-    };
-    fetch(
-      "https://multi-account.sellernext.com/home/public/connector/product/getRefineProducts",
-      payload
+  const payload:any=payloaddata
+    fetch(`${api}`,
+    payload
     )
       .then((response) => response.json())
       .then((allData) => {
@@ -147,7 +135,8 @@ function FillteringTable() {
         </div>
       </div>
       {/*Table Start*/}
-      <Table
+     {(products =="")?<Skeleten/>
+     : <Table
         style={{ marginTop: "5px" }}
         columns={[
           {
@@ -273,7 +262,7 @@ function FillteringTable() {
         rowSelection={{
           type: "checkbox",
         }}
-      />
+      />}
       {/*Table End */}
       {/*Model Start */}
       <Modal
