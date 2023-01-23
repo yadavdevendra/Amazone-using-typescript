@@ -41,6 +41,8 @@ function FillteringTable() {
     )
       .then((response) => response.json())
       .then((allData) => {
+        console.log("AllData",allData);
+        
         let newData = allData?.data?.rows?.map((item: any) => {
           //   console.log(item, "item");
           return {
@@ -104,7 +106,7 @@ function FillteringTable() {
           marginTop: "10px",
         }}
       >
-        {/*Filte Start */}
+        {/*Filter Start */}
         <div style={{ display: "flex" }}>
           <Input.Search
             placeholder="Serch Here...."
@@ -152,6 +154,7 @@ function FillteringTable() {
               );
             },
             width: 100,
+            
           },
           {
             align: "left",

@@ -40,7 +40,7 @@ function Editcomponent() {
     )
       .then((response) => response.json())
       .then((allData) => {
-        // console.log("Editapidata", allData.data.rows);
+        console.log("Editapidata", allData.data);
         allData.data.rows.map((item:any) => {
           if (item.visibility === "Catalog and Search") { setdata(item) }
         });
@@ -50,7 +50,7 @@ function Editcomponent() {
 
   function handlesave() {
     console.log("click on save",save);
-    const paylods =({...payload,...save});
+    const paylods =({...payload,"2":{...save}});
     const header: any ={
       method: "POST",
       body: JSON.stringify(paylods),

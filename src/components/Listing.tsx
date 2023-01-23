@@ -1,20 +1,20 @@
-import { Banner, Button, Card,Page,Select } from "@shopify/polaris";
+import { Banner, Card,Page,Select } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import FillteringTable from "./FillteringTable";
-import PolarisFilter from "./PolarisFilter";
+// import PolarisFilter from "./PolarisFilter";
 import Tabcom from "./Tabcom";
 
 const Listing=()=> {
     const [selected, setSelected] = useState('today');
-    const [anttable,setAnttable] = useState<boolean>(true)
+    // const [anttable,setAnttable] = useState<boolean>(true)
     const options = [
         { label: 'new_account', value: 'Select Name' },
      
     ];
     const handleSelectChange = useCallback((value:string) => setSelected(value), []);
-function handlepolaris(){
-    setAnttable(false)
-}
+// function handlepolaris(){
+//     setAnttable(false)
+// }
     return (
         <Page fullWidth>
         <Card >
@@ -46,9 +46,7 @@ function handlepolaris(){
                 </Banner>
             <Card >
             <Tabcom />
-           {(anttable)? <FillteringTable/>
-           : <PolarisFilter/>}
-           <Button onClick={handlepolaris}>polaris table</Button>
+      <FillteringTable/>
     
             </Card>
             
